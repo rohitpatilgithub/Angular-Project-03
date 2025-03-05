@@ -1,0 +1,55 @@
+<div id="qna">
+    <!-- Audio Recording Section for Each Question -->
+<div *ngIf="questions[currentIndex].type !== 'table'">
+    <label><h1>{{questions[currentIndex].id}}. {{ questions[currentIndex].question }}</h1></label>
+    <input type="text" [(ngModel)]="answers[questions[currentIndex].id]" />
+  </div>
+  
+  <!-- Table Question -->
+  <div *ngIf="questions[currentIndex].type === 'table'">
+    <label><h1>{{questions[currentIndex].id}}. {{ questions[currentIndex].question }}</h1></label>
+    <table [border]="1">
+      <thead>
+        <tr>
+          <th *ngFor="let col of questions[currentIndex].table?.columns">{{ col }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let row of answers[questions[currentIndex].id]; let i = index">
+          <td *ngFor="let col of questions[currentIndex].table?.columns">
+            <input type="text" [(ngModel)]="answers[questions[currentIndex].id][i][col]" [placeholder]="'Enter ' + col" />
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div id="tableButtons">
+      <button (click)="addRow(questions[currentIndex].id, questions[currentIndex].table?.columns)">
+        Add Row
+      </button>
+      <button (click)="removeRow(questions[currentIndex].id)">
+        Remove Row
+      </button>
+    </div>
+  </div>
+  
+  <!-- Navigation Buttons -->
+   <div id="navigate">
+    <button (click)="previous()" [disabled]="currentIndex == 0">Previous</button>
+    <button (click)="next()" [disabled]="currentIndex == (questions.length-1)">Next</button>
+    @if (currentIndex == 1) {
+      <button (click)="skip()">Skip</button>
+    } 
+  </div>
+  
+  <div id="audio">
+    <button (click)="toggleRecording(questions[currentIndex].id)">
+        {{ isRecording[questions[currentIndex].id] ? 'Stop Recording' : 'Record Audio' }}
+      </button>
+      <br><h3>Recorded Audio</h3>
+      <audio *ngIf="audioURLs[questions[currentIndex].id]" controls>
+        <source [src]="audioURLs[questions[currentIndex].id]" type="audio/wav" />
+        Your browser does not support the audio element.
+      </audio>
+</div>
+<button (click)="submitAnswers()">Submit</button>
+</div>

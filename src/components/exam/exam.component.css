@@ -1,0 +1,18 @@
+*{
+    font-family: 'Medium';
+}
+
+#qna{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+button{
+    width: 100px;
+    padding: 10px;
+}
+
+input{
+    margin: 5px;
+}

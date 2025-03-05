@@ -1,0 +1,19 @@
+<h1>Form here</h1>
+<form [formGroup]="form">
+    <div id="qna">
+    @if(ques){
+        @if(currentIndex >= 0){
+            <h1>Q {{ques[currentIndex].id}} {{ques[currentIndex].question}}</h1>
+            @if (ques[currentIndex].type == 'text') {
+                <input type="text" [formControlName]="ques[currentIndex].id">
+            }
+            @if(currentIndex == 0){
+                <button (click)="next()">Yes</button>
+                <button (click)="skip1()">No</button>
+            }
+    <button (click)="previous()" [disabled]="currentIndex == 0">Previous</button>
+    <button (click)="skip1()" [disabled]="currentIndex == ques.length - 1 || !isChecked">Next</button>
+    }
+    }
+</div>
+</form>
